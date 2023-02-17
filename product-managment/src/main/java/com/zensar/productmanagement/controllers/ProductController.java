@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zensar.productmanagement.dto.ProductDTO;
@@ -56,8 +57,11 @@ public class ProductController {
 
 	// @RequestMapping(value = "/product",method=RequestMethod.GET)
 	@GetMapping(value = "/products", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
-	public List<ProductEntity> getAllProducts() {
-		return productService.getAllProducts();
+	public List<ProductEntity> getAllProducts(
+			@RequestParam(value = "pageNumber",required = false,defaultValue = "0")int pageNumber,
+			@RequestParam(value = "pageSize",required = false,defaultValue = "3")int pageSize) {
+		
+		return productService.getAllProducts(pageNumber,pageSize);
 	}
 
 	// http://localhost:7000/products/1

@@ -5,6 +5,10 @@ import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.zensar.productmanagement.dto.ProductDTO;
@@ -39,8 +43,11 @@ public class ProductServiceImpl implements ProductService {
 		productRepository.deleteById(productId);
 	}
 
-	public List<ProductEntity> getAllProducts() {
-		return productRepository.findAll();
+	public List<ProductEntity> getAllProducts(int pageNumber, int pageSize) {
+
+		PageRequest pageRequest = PageRequest.of(pageNumber, pageSize, Sort.by(Direction.DESC, "productId"));
+		Page<ProductEntity> page = productRepository.findAll(pageRequest);
+		return page.getContent();
 	}
 
 	public ProductEntity updateProduct(int productId, ProductEntity product) {

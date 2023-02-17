@@ -7,7 +7,7 @@ import com.zensar.productmanagement.entity.ProductEntity;
 
 public interface ProductService {
 
-	public List<ProductEntity> getAllProducts();
+	public List<ProductEntity> getAllProducts(int pageNumber,int pageSize);
 
 	public ProductEntity updateProduct(int productId, ProductEntity product);
 
