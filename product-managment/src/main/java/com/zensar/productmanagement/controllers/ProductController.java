@@ -3,7 +3,9 @@ package com.zensar.productmanagement.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,7 +16,8 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.zensar.productmanagement.entity.Product;
+import com.zensar.productmanagement.dto.ProductDTO;
+import com.zensar.productmanagement.entity.ProductEntity;
 import com.zensar.productmanagement.services.ProductService;
 
 @RestController
@@ -23,13 +26,12 @@ import com.zensar.productmanagement.services.ProductService;
 public class ProductController {
 
 	// CRUD -> Created,Read,Updated,Deleted
-	
+
 	private ProductService productService;
 
-	//public ProductController() {
+	// public ProductController() {
 
-	//}
-
+	// }
 
 	public ProductController(ProductService productService) {
 		this.productService = productService;
@@ -38,22 +40,23 @@ public class ProductController {
 	// http://localhost:7000/products -> POST
 
 	@PostMapping(value = "/products", consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
-	public void insertProduct(@RequestBody Product product, @RequestHeader("Authorization") String authorization) {
-			System.out.println("Authorization :- " + authorization);
-			productService.insertProduct(product, authorization);
+	public ResponseEntity<ProductDTO> insertProduct(@RequestBody ProductDTO productDto, @RequestHeader("Authorization") String authorization) {
+		System.out.println("Authorization :- " + authorization);
+		 return new ResponseEntity<ProductDTO>(productService.insertProduct(productDto, authorization),HttpStatus.CREATED);
 	}
 
 	// http://localhost:7000/products/1
 	@DeleteMapping("/products/{productId}")
-	public void deleteProductById(@PathVariable int productId) {
-		 productService.deleteProductById(productId);
+	public ResponseEntity<String> deleteProductById(@PathVariable int productId) {
+		productService.deleteProductById(productId);
+		return new ResponseEntity<String>("Product Deleted Successfullyyy",HttpStatus.OK);
 	}
 
 	// http://localhost:7000/products -> GET
 
 	// @RequestMapping(value = "/product",method=RequestMethod.GET)
 	@GetMapping(value = "/products", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
-	public List<Product> getAllProducts() {
+	public List<ProductEntity> getAllProducts() {
 		return productService.getAllProducts();
 	}
 
@@ -62,13 +65,13 @@ public class ProductController {
 	@PutMapping(value = "/products/{productId}", produces = { MediaType.APPLICATION_JSON_VALUE,
 			MediaType.APPLICATION_XML_VALUE }, consumes = { MediaType.APPLICATION_JSON_VALUE,
 					MediaType.APPLICATION_XML_VALUE })
-	public Product updateProduct(@PathVariable int productId, @RequestBody Product product) {
+	public ProductEntity updateProduct(@PathVariable int productId, @RequestBody ProductEntity product) {
 		return productService.updateProduct(productId, product);
 	}
 
 	// http://localhost:7000/products/1 -> GET
 	@GetMapping(value = "/products/{productId}")
-	public Product getProductById(@PathVariable("productId") int productId) {
+	public ProductEntity getProductById(@PathVariable("productId") int productId) {
 		return productService.getProductById(productId);
 	}
 

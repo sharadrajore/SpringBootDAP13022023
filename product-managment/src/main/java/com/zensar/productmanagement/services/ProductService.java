@@ -2,18 +2,19 @@ package com.zensar.productmanagement.services;
 
 import java.util.List;
 
-import com.zensar.productmanagement.entity.Product;
+import com.zensar.productmanagement.dto.ProductDTO;
+import com.zensar.productmanagement.entity.ProductEntity;
 
 public interface ProductService {
 
-	public List<Product> getAllProducts();
+	public List<ProductEntity> getAllProducts();
 
-	public Product updateProduct(int productId, Product product);
+	public ProductEntity updateProduct(int productId, ProductEntity product);
 
-	public Product getProductById(int productId);
+	public ProductEntity getProductById(int productId);
 
 	public void deleteProductById(int productId);
 
-	public void insertProduct(Product product, String authorization);
+	public ProductDTO insertProduct(ProductDTO productDto, String authorization);
 
 }
