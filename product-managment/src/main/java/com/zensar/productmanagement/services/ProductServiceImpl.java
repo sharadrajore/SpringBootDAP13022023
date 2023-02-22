@@ -63,8 +63,18 @@ public class ProductServiceImpl implements ProductService {
 		return null;
 	}
 
-	public ProductEntity getProductById(int productId) {
-		return productRepository.findById(productId).get();
+	public Optional<ProductEntity> getProductById(int productId) {
+		Optional<ProductEntity> entity = productRepository.findById(productId);
+
+		if (entity.isPresent()) {
+			return productRepository.findById(productId);
+		}
+
+		return null;
+	}
+
+	public List<ProductEntity> getProductByItsNameAndCost(String productName, int productCost) {
+		return productRepository.myMethod(productName, productCost);
 	}
 
 	/*
