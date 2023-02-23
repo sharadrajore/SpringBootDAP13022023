@@ -23,7 +23,13 @@ import com.zensar.productmanagement.entity.ProductEntity;
 import com.zensar.productmanagement.exception.ProductNotFoundException;
 import com.zensar.productmanagement.services.ProductService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
+@Tag(name = "Product Rest Controller")
 //@RequestMapping(produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE }, consumes = {
 //		MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 public class ProductController {
@@ -79,7 +85,8 @@ public class ProductController {
 
 	// http://localhost:7000/products/1 -> GET
 	@GetMapping(value = "/products/{productId}")
-	public ProductEntity getProductById(@PathVariable("productId") int productId) {
+	@Operation(summary = "Returns a product",description = "It takes Id and returns a Product")
+	public @ApiResponse(description = "Return a product") ProductEntity getProductById(@Parameter(description = "Please enter the productId (int)")@PathVariable("productId") int productId) {
 
 		Optional<ProductEntity> productById = productService.getProductById(productId);
 
