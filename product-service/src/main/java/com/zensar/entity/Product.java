@@ -21,5 +21,7 @@ public class Product {
 	private String productName;
 	private String discription;
 	private BigDecimal price;
+	@Transient
+	private String couponCode;
 
 }
