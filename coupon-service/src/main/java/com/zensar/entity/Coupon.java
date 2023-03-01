@@ -1,5 +1,7 @@
 package com.zensar.entity;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,7 +18,7 @@ public class Coupon {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int couponId;
 	private String couponCode;
-	private Double discount;
-	private String expDate; 
-	
+	private BigDecimal discount;
+	private String expDate;
+
 }

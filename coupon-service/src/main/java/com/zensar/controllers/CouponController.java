@@ -25,6 +25,7 @@ public class CouponController {
 
 	@GetMapping("/{couponCode}")
 	public Coupon getCoupon(@PathVariable("couponCode") String couponCode) {
+		System.out.println("SERVER-2");
 		return couponService.getCoupon(couponCode);
 	}
 	
